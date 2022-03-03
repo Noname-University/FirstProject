@@ -6,6 +6,7 @@ public class Gold : MonoBehaviour
 {
     [SerializeField]
     private float speed;
+
    
     private void Update()
     {
@@ -13,6 +14,7 @@ public class Gold : MonoBehaviour
     }
     public void Collect()
     {
+        UIController.Instance.IncreaseScore();
         Destroy(gameObject);
     }
 }
