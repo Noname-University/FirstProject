@@ -1,14 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Helpers;
 
-public class Player : MonoBehaviour
+public class Player : MonoSingleton<Player>, IKillable
 {
+  
    [SerializeField]
     private float speed;
 
      [SerializeField]
     private float jumpSpeed;
+
+    [SerializeField]
+    private Transform jumpControlPoint;
+
+    [SerializeField]
+
+    private float health;
 
 
     private Rigidbody rb;
@@ -41,7 +50,25 @@ public class Player : MonoBehaviour
 
          if (Input.GetKeyDown(KeyCode.Space))
          {
-            rb.AddForce(Vector3.up * jumpSpeed);
+            if(Physics.Raycast(jumpControlPoint.position, Vector3.down, 0.1f))
+            {
+                rb.AddForce(Vector3.up * jumpSpeed);
+            }
          }
+    }
+
+    public void Healthdecrase(float hitPoint)
+    {
+        health -= hitPoint;
+        
+        if(health <= 0)
+        {
+            Kill();
+        }
+    }
+
+    public void Kill()
+    {
+       Time.timeScale = 0;
     }
 }
