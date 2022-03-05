@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  destroyTime: 15
 --- !u!1 &4260170048168923488
 GameObject:
   m_ObjectHideFlags: 0
