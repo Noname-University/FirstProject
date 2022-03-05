@@ -20,7 +20,20 @@ public class Player : MonoBehaviour
     private void Update()
     {
 
-        transform.position += new Vector3
+      Movement();
+
+    }
+    
+    private void OnTriggerEnter(Collider other) {
+        var collectable = other.GetComponent<ICollectable>();
+        if (collectable != null)
+        {
+            collectable.Collect();
+        }
+    }
+
+    private void Movement(){
+          transform.position += new Vector3
         (
             Input.GetAxis("Horizontal") * speed * Time.deltaTime,
             0,
@@ -36,15 +49,6 @@ public class Player : MonoBehaviour
                 rb.AddForce(Vector3.up * jumpSpeed);
 
             }
-        }
-
-    }
-    
-    private void OnTriggerEnter(Collider other) {
-        var collectable = other.GetComponent<ICollectable>();
-        if (collectable != null)
-        {
-            collectable.Collect();
         }
     }
 }
