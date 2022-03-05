@@ -8,11 +8,14 @@ public class MapController : MonoSingleton<MapController>
     [SerializeField]
     private Vector2 mapSize;
 
+    [SerializeField]
+    private Transform plane;
+
     public Vector2 MapSize => mapSize;
 
 
     private void Start()
     {
-        transform.localScale = new Vector3(mapSize.x, 0, mapSize.y);
+        plane.localScale = new Vector3(mapSize.x, 1, mapSize.y);
     }
 }
