@@ -43,7 +43,7 @@ public class Player : MonoSingleton<Player>, IKillable
         var desiredPositionX=Mathf.Clamp(transform.position.x + Input.GetAxis("Horizontal") * speed * Time.deltaTime, -MapController.Instance.MapSize.x * 5, MapController.Instance.MapSize.x * 5);
         var desiredPositionZ=Mathf.Clamp(transform.position.z + Input.GetAxis("Vertical") * speed * Time.deltaTime, -MapController.Instance.MapSize.y * 5, MapController.Instance.MapSize.y * 5);
         //sağ sol ileri geri hareket
-        transform.position = new Vector3(desiredPositionX,0,desiredPositionZ);
+        transform.position = new Vector3(desiredPositionX,transform.position.y,desiredPositionZ);
         //zıpmalama
         if (Input.GetKeyDown(KeyCode.Space))
         {
