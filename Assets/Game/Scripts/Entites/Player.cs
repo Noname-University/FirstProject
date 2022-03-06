@@ -40,12 +40,10 @@ public class Player : MonoSingleton<Player>, IKillable
 
     //sağ sol zıplama ileri geri
     private void Movement(){
+        var desiredPositionX=Mathf.Clamp(transform.position.x + Input.GetAxis("Horizontal") * speed * Time.deltaTime, -MapController.Instance.MapSize.x * 5, MapController.Instance.MapSize.x * 5);
+        var desiredPositionZ=Mathf.Clamp(transform.position.z + Input.GetAxis("Vertical") * speed * Time.deltaTime, -MapController.Instance.MapSize.y * 5, MapController.Instance.MapSize.y * 5);
         //sağ sol ileri geri hareket
-        transform.position += new Vector3(
-            Input.GetAxis("Horizontal") * speed * Time.deltaTime,
-            0,
-            Input.GetAxis("Vertical") * speed * Time.deltaTime
-        );
+        transform.position = new Vector3(desiredPositionX,0,desiredPositionZ);
         //zıpmalama
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -54,6 +52,7 @@ public class Player : MonoSingleton<Player>, IKillable
                 rb.AddForce(Vector3.up * jumpSpeed);
             }
         }
+        
     }
 
     public void Kill()
