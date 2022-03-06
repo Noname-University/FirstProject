@@ -9,9 +9,7 @@ public class CollectableController : MonoBehaviour
 
     [SerializeField]
     private CollectableType[] collectables;
-
-
-
+    
 
     private void Start()
     {
