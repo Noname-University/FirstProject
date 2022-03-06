@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Helpers;
 using UnityEngine;
+using System;
 public class Player : MonoSingleton<Player>, IKillable
 {
 
@@ -19,6 +20,8 @@ public class Player : MonoSingleton<Player>, IKillable
     private float health;
 
     private Rigidbody rb;
+
+    public event Action<float> PlayerHealthDecrase;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -67,5 +70,7 @@ public class Player : MonoSingleton<Player>, IKillable
         {
             Kill();
         }
+        
+        PlayerHealthDecrase?.Invoke(hitPoint);
     }
 }
