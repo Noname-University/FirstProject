@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Helpers;
+using System;
 
 public class Player : MonoSingleton<Player>, IKillable
 {
@@ -15,12 +16,14 @@ public class Player : MonoSingleton<Player>, IKillable
     [SerializeField]
     private Transform jumpControlPoint;
 
-    [SerializeField]
 
-    private float health;
+    private float health = 100;
 
 
     private Rigidbody rb;
+
+    public event Action<float> PlayerHealthDecraese;
+
 
     private void Start()
     {
@@ -75,6 +78,8 @@ public class Player : MonoSingleton<Player>, IKillable
         {
             Kill();
         }
+
+        PlayerHealthDecraese?.Invoke(hitPoint);
     }
 
     public void Kill()
