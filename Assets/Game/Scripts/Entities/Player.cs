@@ -5,7 +5,7 @@ using Helpers;
 
 public class Player : MonoSingleton<Player>, IKillable
 {
-   [SerializeField]
+    [SerializeField]
     private float speed;
 
     [SerializeField]
@@ -22,7 +22,7 @@ public class Player : MonoSingleton<Player>, IKillable
     private Rigidbody rb;
 
 
-    private void Start() 
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
@@ -32,10 +32,10 @@ public class Player : MonoSingleton<Player>, IKillable
         Movement();
     }
 
-    private void   OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
-        var collectable =  other.GetComponent<ICollectable>();
-        if(collectable != null)
+        var collectable = other.GetComponent<ICollectable>();
+        if (collectable != null)
         {
             collectable.Collect();
         }
@@ -49,20 +49,35 @@ public class Player : MonoSingleton<Player>, IKillable
             Input.GetAxis("Vertical") * speed * Time.deltaTime
         );
 
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(Physics.Raycast(jumpControlPoint.position, Vector3.down, 0.1f))
+            if (Physics.Raycast(jumpControlPoint.position, Vector3.down, 0.1f))
             {
                 rb.AddForce(Vector3.up * jumpSpeed);
             }
         }
+        var desiredPositionX = Mathf.Clamp(
+            transform.position.x + Input.GetAxis("Horizontal") * speed * Time.deltaTime,
+             -MapController.Instance.MapSize.x * 5,
+             MapController.Instance.MapSize.x * 5);
+        var desiredPositionZ = Mathf.Clamp(
+           transform.position.z + Input.GetAxis("Vertical") * speed * Time.deltaTime,
+            -MapController.Instance.MapSize.y * 5,
+            MapController.Instance.MapSize.y * 5);
+        transform.position = new Vector3(desiredPositionX, transform.position.y, desiredPositionZ);
+
+
+
+
+
+
     }
 
     public void Healthdecraese(float hitPoint)
     {
         health -= hitPoint;
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Kill();
         }
