@@ -14,16 +14,18 @@ public class CollectableController : MonoBehaviour
     {
         foreach (var collectable in collectables)
         {
-            SpawnLoop(collectable);
+            StartCoroutine(SpawnLoop(collectable));
         }   
     }
-        private void SpawnLoop(CollectableType collectableType)
+        private IEnumerator SpawnLoop(CollectableType collectableType)
         {
             float xPosition = Random.Range(-MapController.Instance.MapSize.x *5,MapController.Instance.MapSize.x * 5);
             float zPosition = Random.Range(-MapController.Instance.MapSize.y *5,MapController.Instance.MapSize.y * 5);
 
             Instantiate(collectableType.Prefab, new Vector3(xPosition, 0, zPosition), Quaternion.identity, collecttableParent);
-            LeanTween.delayedCall(collectableType.SpwanTime, () => SpawnLoop(collectableType));
+            yield return new WaitForSeconds(collectableType.SpwanTime);
+
+            StartCoroutine(SpawnLoop(collectableType));
         }
 }
 
