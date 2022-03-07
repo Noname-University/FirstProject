@@ -9,17 +9,20 @@ public class CollectableController : MonoBehaviour
 
     [SerializeField]
     private CollectableType[] collectables;
+
+
+    private int leanTweenId;
     
 
     private void Start()
     {
         foreach (var collectable in collectables)
         {
-            SpawnLoop(collectable);
+            StartCoroutine(SpawnLoop(collectable));
         }
     }
 
-    private void SpawnLoop(CollectableType collectableType)
+    private IEnumerator SpawnLoop(CollectableType collectableType)
     {
         float xPosition = Random.Range
         (
@@ -40,7 +43,9 @@ public class CollectableController : MonoBehaviour
             collectableParent
         );
 
-        LeanTween.delayedCall(collectableType.SpawnTime, () => SpawnLoop(collectableType));
+        yield return new WaitForSeconds(collectableType.SpawnTime);
+
+        StartCoroutine(SpawnLoop(collectableType));
     }
 
 }
@@ -53,6 +58,7 @@ struct CollectableType
 
     [SerializeField]
     private float spawnTime;
+
 
     public GameObject Prefab => prefab;
     public float SpawnTime => spawnTime;
