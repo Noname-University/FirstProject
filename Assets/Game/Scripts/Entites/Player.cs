@@ -22,6 +22,8 @@ public class Player : MonoSingleton<Player>, IKillable
     private Rigidbody rb;
 
     public event Action<float> PlayerHealthDecrase;
+    public event Action PlayerDead;
+
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -61,6 +63,8 @@ public class Player : MonoSingleton<Player>, IKillable
     public void Kill()
     {
         Time.timeScale = 0;
+        PlayerDead?.Invoke();
+        
     }
 
     public void HealtDecraese(float hitPoint)
