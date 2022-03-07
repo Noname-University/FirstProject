@@ -24,6 +24,7 @@ public class Player : MonoSingleton<Player>, IKillable
 
     public event Action<float> PlayerHealthDecraese;
 
+    public event Action PlayerDead;
 
     private void Start()
     {
@@ -85,5 +86,6 @@ public class Player : MonoSingleton<Player>, IKillable
     public void Kill()
     {
        Time.timeScale = 0;
+       PlayerDead?.Invoke();
     }
 }
